@@ -51,8 +51,8 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o
 sed -i 's#mount -t cifs#mount.cifs#g' feeds/luci/applications/luci-app-cifs-mount/root/etc/init.d/cifs
 
 # node版本修复
-rm -rf feeds/packages/node
-git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/node
+rm -rf feeds/packages/lang/node
+git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
 
 # mosdns
 find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
