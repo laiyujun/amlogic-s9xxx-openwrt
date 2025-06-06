@@ -231,7 +231,7 @@ on:
           - ophub
           - angel
           - yourname
-  #自动编译：每个月15/28早上4点
+  #自动编译：每个月15/28早上0点
   schedule:
     - cron: 0 16 15,28 * *
 
