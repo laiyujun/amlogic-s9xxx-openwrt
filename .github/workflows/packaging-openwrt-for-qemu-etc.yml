@@ -180,7 +180,7 @@ jobs:
           latest_version=$(curl -s \
                 -H "Accept: application/vnd.github+json" \
                 -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                https://api.github.com/repos/${GITHUB_REPOSITORY}/releases?per_page=100 | \
+                https://api.github.com/repos/${armsr_tarfile_repo}/releases?per_page=100 | \
                 jq -r --arg RTK "${releases_tag_keywords}" \dow
                 --arg BOARD "-rootfs.tar.gz" \
                 '[.[] | select(.tag_name | contains($RTK))] |
@@ -200,6 +200,7 @@ jobs:
 
           echo "build_tag=OpenWrt_armv8_${{ inputs.openwrt_storage }}_$(date +"%Y.%m")" >> ${GITHUB_OUTPUT}
           echo "status=success" >> ${GITHUB_OUTPUT}
+          echo "${GITHUB_REPOSITORY}"
 
       - name: Clone packit source code
         working-directory: /builder
