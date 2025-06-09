@@ -8,7 +8,17 @@
 
 # Add a feed source
 # sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+# Add iStore feed source
+sed -i '$a src-git istore https://github.com/linkease/istore;main' feeds.conf.default
 
 # other
 # rm -rf package/utils/{ucode,fbtest}
 
+## 解除系统限制
+ulimit -u 10000
+ulimit -n 4096
+ulimit -d unlimited
+ulimit -m unlimited
+ulimit -s unlimited
+ulimit -t unlimited
+ulimit -v unlimited
