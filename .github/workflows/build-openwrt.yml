@@ -225,6 +225,8 @@ on:
         options:
           - save
           - temp
+          - test
+          - other
       builder_name:
         description: "Set OpenWrt builder signature."
         required: false
