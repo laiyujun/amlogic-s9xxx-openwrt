@@ -342,7 +342,7 @@ jobs:
           [[ -f "${FEEDS_CONF}" ]] && cp -f ${FEEDS_CONF} openwrt/feeds.conf.default
           chmod +x ${DIY_P1_SH}
           cd openwrt/
-          # ${GITHUB_WORKSPACE}/${DIY_P1_SH}
+          ${GITHUB_WORKSPACE}/${DIY_P1_SH}
 
       - name: Update feeds
         run: cd openwrt/ && ./scripts/feeds update -a
@@ -355,14 +355,14 @@ jobs:
           echo "Custom Packages Here."
           chmod +x ${DIY_PKG_SH} ${DIY_HDL_SH}
           cd openwrt/package/
-          # $GITHUB_WORKSPACE/${DIY_PKG_SH}
-          # $GITHUB_WORKSPACE/${DIY_HDL_SH}
+          $GITHUB_WORKSPACE/${DIY_PKG_SH}
+          $GITHUB_WORKSPACE/${DIY_HDL_SH}
 
       - name: Load custom configuration
         run: |
           [[ -d "files" ]] && mv -f files openwrt/files
           [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} openwrt/.config
-          # [[ -e "${CUSTOM_CONFIG_FILE}" ]] && echo "$(cat ${CUSTOM_CONFIG_FILE})" >> openwrt/.config
+          [[ -e "${CUSTOM_CONFIG_FILE}" ]] && echo "$(cat ${CUSTOM_CONFIG_FILE})" >> openwrt/.config
           chmod +x ${DIY_P2_SH}
           cd openwrt/
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
