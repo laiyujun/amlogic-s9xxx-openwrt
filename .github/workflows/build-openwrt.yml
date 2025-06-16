@@ -11,7 +11,7 @@ on:
     inputs:
       source_branch:
         description: "Select the source branch"
-        required: false
+        required: true
         default: "lede-master"
         type: choice
         options:
@@ -20,7 +20,7 @@ on:
           - immortalwrt-master
       openwrt_board:
         description: "Select device board"
-        required: false
+        required: true
         default: "s905d_qemu"
         type: choice
         options:
@@ -179,7 +179,7 @@ on:
           - zysj
       openwrt_kernel:
         description: "Select kernel version"
-        required: false
+        required: true
         default: "6.6.y"
         type: choice
         options:
@@ -201,7 +201,7 @@ on:
         type: boolean
       kernel_repo:
         description: "Set the kernel repository"
-        required: false
+        required: true
         default: "ophub/kernel"
         type: choice
         options:
@@ -209,7 +209,7 @@ on:
           - breakings/OpenWrt
       kernel_usage:
         description: "Set the tags of the stable kernel."
-        required: false
+        required: true
         default: "stable"
         type: choice
         options:
@@ -219,7 +219,7 @@ on:
           - beta
       openwrt_storage:
         description: "Select image storage type."
-        required: false
+        required: true
         default: "save"
         type: choice
         options:
@@ -229,7 +229,7 @@ on:
           - other
       builder_name:
         description: "Set OpenWrt builder signature."
-        required: false
+        required: true
         default: "ophub"
         type: choice
         options:
