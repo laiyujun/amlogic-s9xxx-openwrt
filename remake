@@ -119,7 +119,7 @@ ip_regex="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01
 make_board="all"
 # Set OpenWrt firmware size (Unit: MiB, boot_mb >= 256, root_mb >= 1024)
 boot_mb="384"
-root_mb="1280"
+root_mb="1024"
 # Set OpenWrt builder signature
 builder_name=""
 
@@ -289,9 +289,9 @@ init_var() {
         fi
     }
 
-    # Validate partition sizes (Unit: MiB). Boot must be >= 256 and root >= 1024 to fit.
+    # Validate partition sizes (Unit: MiB). Boot must be >= 256 and root >= 512 to fit.
     [[ "${boot_mb}" =~ ^[0-9]+$ && "${boot_mb}" -ge 256 ]] || error_msg "Invalid boot partition size: [ ${boot_mb} ]"
-    [[ "${root_mb}" =~ ^[0-9]+$ && "${root_mb}" -ge 1024 ]] || error_msg "Invalid rootfs partition size: [ ${root_mb} ]"
+    [[ "${root_mb}" =~ ^[0-9]+$ && "${root_mb}" -ge 512 ]] || error_msg "Invalid rootfs partition size: [ ${root_mb} ]"
 }
 
 check_data() {
