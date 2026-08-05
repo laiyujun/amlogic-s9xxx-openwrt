@@ -783,7 +783,7 @@ make_image() {
     board_release="${different_files}/${board}/rootfs/${board_release_file}"
     [[ -f "${board_release}" ]] && source "${board_release}"
 
-    # echo -e "${INFO} The [ ${board} ] OpenWrt image partition status: [ skip:${skip_mb} / boot:${boot_mb} / rootfs:${root_mb} ] MiB."
+    echo -e "${INFO} The [ ${board} ] OpenWrt image partition status: [ skip:${skip_mb} / boot:${boot_mb} / rootfs:${root_mb} ] MiB."
 
     # Check output directory
     [[ -d "${out_path}" ]] || mkdir -p "${out_path}"
