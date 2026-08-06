@@ -117,9 +117,9 @@ ip_regex="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01
 
 # Initialize the target build device list
 make_board="all"
-# Set OpenWrt firmware size (Unit: MiB, boot_mb >= 256, root_mb >= 1024)
+# Set OpenWrt firmware size (Unit: MiB, boot_mb >= 256, root_mb >= 960)
 boot_mb="384"
-root_mb="1024"
+root_mb="960"
 # Set OpenWrt builder signature
 builder_name=""
 
@@ -783,7 +783,7 @@ make_image() {
     board_release="${different_files}/${board}/rootfs/${board_release_file}"
     [[ -f "${board_release}" ]] && source "${board_release}"
 
-    echo -e "${INFO} The [ ${board} ] OpenWrt image partition status: [ skip:${skip_mb} / boot:${boot_mb} / rootfs:${root_mb} ] MiB."
+    # echo -e "${INFO} The [ ${board} ] OpenWrt image partition status: [ skip:${skip_mb} / boot:${boot_mb} / rootfs:${root_mb} ] MiB."
 
     # Check output directory
     [[ -d "${out_path}" ]] || mkdir -p "${out_path}"
@@ -1275,6 +1275,24 @@ EOF
     # Create initial /etc snapshot
     mkdir -p .snapshots
     btrfs subvolume snapshot -r etc .snapshots/etc-000 >/dev/null 2>&1
+
+    # Write the specific boot&root size for [ Amlogic ] boxes
+    local install_script="${tag_rootfs}/usr/sbin/openwrt-install-amlogic"
+    if [[ "${PLATFORM}" == "amlogic" ]]; then
+        if [[ -f "${install_script}" ]]; then
+            sed -i "s/^ROOT1=\"1280\"/ROOT1=\"${root_mb}\"/" "${install_script}"
+            sed -i "s/^ROOT2=\"1280\"/ROOT2=\"${root_mb}\"/" "${install_script}"
+            sed -i "s/BOOT=\"512\"/BOOT=\"${boot_mb}\"/g" "${install_script}"
+
+            echo "==== [amlogic] sync emmc-install param boot_mb=${boot_mb} root_mb=${root_mb} ===="
+            grep -E '^ROOT1|^ROOT2|BOOT=' "${install_script}"
+            echo "=================================================================================="
+        else
+            echo "[INFO] amlogic: openwrt-install-amlogic not found, skip modify"
+        fi
+    else
+        echo "[INFO] PLATFORM=${PLATFORM}, skip amlogic install‑script modification"
+    fi
 
     sync && sleep 3
 }
